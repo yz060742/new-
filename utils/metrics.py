@@ -100,6 +100,7 @@ def diceCoeff(pred, gt, smooth=1e-5, ):
 
     return score.sum() / N
 
+
 def diceFlat(pred, gt, smooth=1e-5):
     intersection = ((pred * gt).sum()).item()
 

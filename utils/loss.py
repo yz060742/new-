@@ -26,6 +26,7 @@ class SoftDiceLoss(_Loss):
 
     def forward(self, y_pred, y_true):
         class_dice = []
+        # 从1开始排除背景，前提是颜色表palette中背景放在第一个位置 [[0], ..., ...]
         for i in range(1, self.num_classes):
             class_dice.append(diceCoeffv2(y_pred[:, i:i + 1, :], y_true[:, i:i + 1, :]))
         mean_dice = sum(class_dice) / len(class_dice)

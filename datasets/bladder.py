@@ -10,8 +10,8 @@ from utils import helpers
 255 = tumor
 0   = background 
 '''
-palette = [[0], [128], [255]]
-num_classes = 3
+palette = [[0], [128], [255]]  # one-hot的颜色表
+num_classes = 3  # 分类数
 
 
 def make_dataset(root, mode, fold):
@@ -101,6 +101,7 @@ if __name__ == '__main__':
     import utils.image_transforms as joint_transforms
     import utils.transforms as extended_transforms
 
+    # 测试加载数据类
     def demo():
         train_path = r'../media/Datasets/Bladder/raw_data'
         val_path = r'../media/Datasets/Bladder/raw_data'
@@ -120,9 +121,12 @@ if __name__ == '__main__':
             print(input.shape)
             print(mask.shape)
             img = helpers.array_to_img(np.expand_dims(input.squeeze(), 2))
+            # 将gt反one-hot回去以便进行可视化
+            palette = [[0, 0, 0], [246, 16, 16], [16, 136, 246]]
             gt = helpers.onehot_to_mask(np.array(mask.squeeze()).transpose(1, 2, 0), palette)
             gt = helpers.array_to_img(gt)
-            cv2.imshow('img GT', np.uint8(np.hstack([img, gt])))
+            # cv2.imshow('img GT', np.uint8(np.hstack([img, gt])))
+            cv2.imshow('img GT', np.uint8(gt))
             cv2.waitKey(1000)
 
     demo()
